@@ -1,1 +1,1 @@
-Customizable Powerline-style statusline for OpenAI Codex in Visual Studio Code.
+Run the Codex Powerline terminal in a Visual Studio Code sidebar.
