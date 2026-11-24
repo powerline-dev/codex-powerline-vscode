@@ -1,106 +1,76 @@
 {
   "name": "codex-powerline-vscode",
   "displayName": "Codex Powerline",
-  "description": "Conversation, project, and account metrics in the Codex sidebar.",
-  "version": "0.1.2",
+  "description": "Run the Codex Powerline terminal in a VS Code sidebar.",
+  "version": "0.2.0",
   "publisher": "powerline-dev",
   "license": "MIT",
   "engines": {
     "vscode": "^1.96.2"
   },
-  "categories": [
-    "Other"
-  ],
+  "categories": ["Other"],
   "repository": {
     "type": "git",
     "url": "https://github.com/powerline-dev/codex-powerline-vscode.git"
   },
-  "extensionDependencies": [
-    "openai.chatgpt"
-  ],
-  "extensionKind": [
-    "workspace"
-  ],
+  "extensionKind": ["workspace"],
+  "capabilities": {
+    "virtualWorkspaces": false
+  },
   "main": "./dist/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codexPowerline",
+          "title": "Codex Powerline",
+          "icon": "$(terminal)"
+        }
+      ]
+    },
+    "views": {
+      "codexPowerline": [
+        {
+          "id": "codexPowerline.terminal",
+          "name": "Terminal",
+          "type": "webview",
+          "icon": "$(terminal)"
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "codexPowerline.openSavedConversation",
+        "command": "codexPowerline.restartTerminal",
         "category": "Codex Powerline",
-        "title": "Open Saved Conversation",
-        "icon": "$(go-to-file)"
-      },
-      {
-        "command": "codexPowerline.importLayout",
-        "category": "Codex Powerline",
-        "title": "Import Layout",
-        "icon": "$(gear)"
+        "title": "Restart Terminal",
+        "icon": "$(debug-restart)"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "codexPowerline.openSavedConversation",
-          "when": "view == codexPowerline.primary || view == codexPowerline.secondary",
-          "group": "navigation@1"
-        },
-        {
-          "command": "codexPowerline.importLayout",
-          "when": "view == codexPowerline.primary || view == codexPowerline.secondary",
-          "group": "navigation@2"
+          "command": "codexPowerline.restartTerminal",
+          "when": "view == codexPowerline.terminal",
+          "group": "navigation"
         }
       ]
-    },
-    "views": {
-      "codexSecondaryViewContainer": [
-        {
-          "id": "codexPowerline.secondary",
-          "name": "Powerline",
-          "type": "webview",
-          "icon": "$(pulse)",
-          "when": "!chatgpt.doesNotSupportSecondarySidebar"
-        }
-      ],
-      "codexViewContainer": [
-        {
-          "id": "codexPowerline.primary",
-          "name": "Powerline",
-          "type": "webview",
-          "icon": "$(pulse)",
-          "when": "chatgpt.doesNotSupportSecondarySidebar"
-        }
-      ]
-    },
-    "configuration": {
-      "title": "Codex Powerline",
-      "properties": {
-        "codexPowerline.layout": {
-          "type": [
-            "object",
-            "null"
-          ],
-          "default": null,
-          "scope": "application",
-          "description": "Shared Powerline settings or preset JSON. Leave unset to use Author’s Favorite."
-        }
-      }
     }
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "esbuild src/extension.ts --bundle --platform=node --target=node20 --external:vscode --outfile=dist/extension.js",
+    "build": "esbuild src/extension.ts --bundle --platform=node --target=node20 --external:vscode --external:node-pty --outfile=dist/extension.js && esbuild src/webview.ts --bundle --platform=browser --outfile=dist/terminal.js",
     "vscode:prepublish": "npm run check && npm run build",
-    "package": "vsce package --no-dependencies"
+    "package": "vsce package"
   },
   "dependencies": {
-    "@powerline-dev/codex-powerline-core": "1.0.4",
-    "fzstd": "^0.1.1",
-    "string-width": "^7.2.0"
+    "node-pty": "1.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/vscode": "~1.96.0",
     "@vscode/vsce": "^4.1.1",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
     "esbuild": "^0.28.0",
     "typescript": "~5.9.0"
   }

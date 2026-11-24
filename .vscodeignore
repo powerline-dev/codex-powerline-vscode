@@ -1,6 +1,14 @@
 **
 !dist/extension.js
-!media/powerline.css
+!dist/terminal.js
+!dist/terminal.css
+!node_modules/node-pty/package.json
+!node_modules/node-pty/LICENSE
+!node_modules/node-pty/lib/**/*.js
+!node_modules/node-pty/prebuilds/**/*.{node,exe,dll}
+!node_modules/node-pty/prebuilds/**/spawn-helper
+!node_modules/node-pty/build/Release/**/*.{node,exe,dll}
+!node_modules/node-pty/build/Release/spawn-helper
 !LICENSE
 !NOTICE
 !README.md
