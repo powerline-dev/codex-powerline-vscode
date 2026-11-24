@@ -1,5 +1,6 @@
 import { Terminal, type ITheme } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
+import { Unicode11Addon } from '@xterm/addon-unicode11';
 import type { TerminalInput, TerminalOutput, TerminalSize } from './messages';
 import '@xterm/xterm/css/xterm.css';
 import './webview.css';
@@ -33,12 +34,15 @@ function readTheme(): ITheme {
 }
 
 const terminal = new Terminal({
+    allowProposedApi: true,
     fontFamily: `${symbolFont}, ${container.dataset.fontFamily ?? 'monospace'}`,
     fontSize: Number(container.dataset.fontSize) || 14,
     theme: readTheme()
 });
 const fit = new FitAddon();
 terminal.loadAddon(fit);
+terminal.loadAddon(new Unicode11Addon());
+terminal.unicode.activeVersion = '11';
 terminal.open(container);
 
 let size: TerminalSize | undefined;

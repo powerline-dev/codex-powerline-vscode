@@ -2,7 +2,7 @@
   "name": "codex-powerline-vscode",
   "displayName": "Codex Powerline",
   "description": "Run the Codex Powerline terminal in a VS Code sidebar.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "publisher": "powerline-dev",
   "license": "MIT",
   "engines": {
@@ -74,6 +74,7 @@
     "@types/vscode": "~1.96.0",
     "@vscode/vsce": "^4.1.1",
     "@xterm/addon-fit": "^0.11.0",
+    "@xterm/addon-unicode11": "^0.9.0",
     "@xterm/xterm": "^6.0.0",
     "esbuild": "^0.28.0",
     "typescript": "~5.9.0"

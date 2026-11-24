@@ -1,7 +1,8 @@
 Codex Powerline
 Copyright (c) 2026 Martin Hájek
 
-The bundled xterm.js terminal and Fit addon use the MIT License. See LICENSE.
+The bundled xterm.js terminal, Fit addon, and Unicode 11 addon use the MIT
+License. See LICENSE.
 The node-pty runtime includes its license in node_modules/node-pty/LICENSE.
 
 Codex Powerline Symbols is a renamed WOFF2 subset of the Powerline characters
