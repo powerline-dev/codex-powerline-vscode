@@ -88,7 +88,8 @@
   },
   "dependencies": {
     "@powerline-dev/codex-powerline-core": "1.0.4",
-    "fzstd": "^0.1.1"
+    "fzstd": "^0.1.1",
+    "string-width": "^7.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

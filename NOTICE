@@ -12,3 +12,5 @@ Bundled dependencies also distributed under the MIT License
 
 fzstd, Copyright (c) 2020 Arjun Barrett
 Zod, Copyright (c) 2025 Colin McDonnell
+string-width, get-east-asian-width, strip-ansi, and ansi-regex, Copyright (c) Sindre Sorhus
+emoji-regex, Copyright Mathias Bynens

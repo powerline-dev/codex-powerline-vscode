@@ -1,4 +1,5 @@
 import { homedir } from 'node:os';
+import stringWidth from 'string-width';
 import {
     ChatStatusWidget,
     CodexAccountEmailWidget,
@@ -6,6 +7,8 @@ import {
     ContextLengthWidget,
     CURRENT_VERSION,
     ModelWidget,
+    NO_GIT_HIDEABLE_STATE,
+    NO_UPSTREAM_HIDEABLE_STATE,
     PermissionsWidget,
     SessionCostWidget,
     SessionNameWidget,
@@ -79,6 +82,40 @@ interface Segment {
     percent?: number;
 }
 
+// Render these values through the same widget formatters to measure empty slots.
+const preview: StatusJSON = {
+    cwd: `${homedir()}/Documents/Projects/my-project`,
+    session_id: '00000000-0000-0000-0000-000000000000',
+    model: 'gpt-6.2-sol',
+    effort: { level: 'xhigh' },
+    chat_status: 'waiting_for_approval',
+    fast_mode: true,
+    cost: { total_cost_usd: 2.45 },
+    context_window: { current_usage: 50_000, context_window_size: 200_000 },
+    codex: {
+        session_name: 'my-session',
+        account_email: 'you@example.com',
+        account_workspace_name: 'Example Company',
+        sandbox: 'workspace-write',
+        approval_policy: 'on-request',
+        compactions: 2,
+        total_tokens: 152_000,
+        input_tokens: 150_000,
+        output_tokens: 2_000,
+        cached_input_tokens: 67_000,
+        cache_write_input_tokens: 5_000,
+        last_cached_input_tokens: 23_000,
+        last_cache_write_input_tokens: 3_000
+    },
+    rate_limits: {
+        five_hour: { used_percentage: 48, resets_at: 1795554540 },
+        seven_day: { used_percentage: 53, resets_at: 1796030820 }
+    }
+};
+const previewGit: GitStatus = {
+    branch: 'feature/example', changedFiles: 2, insertions: 42, deletions: 10, ahead: 2, behind: 3, identity: 'you@work.com'
+};
+
 const shortPath = (value: string) => {
     const home = homedir();
     return value === home || value.startsWith(home + '/') || value.startsWith(home + '\\')
@@ -107,13 +144,18 @@ function renderWidget(item: WidgetItem, data: StatusJSON, git: GitStatus | undef
     }
 
     const codex = data.codex;
+    const missingGit = isHidden(item, NO_GIT_HIDEABLE_STATE.key) ? undefined : '(no git)';
     switch (type) {
         case 'current-working-dir':
             return data.cwd ? labeled('Working directory', shortPath(data.cwd)) : undefined;
         case 'git-branch':
-            return labeled('Branch', git?.branch === '(detached)' ? 'Detached HEAD' : git?.branch);
+            return git ? labeled('Branch', git.branch === '(detached)' ? 'Detached HEAD' : git.branch)
+                : missingGit ? { text: '⎇ no git', label: 'Git branch' } : undefined;
         case 'git-changes': {
-            const files = git?.changedFiles;
+            if (!git) {
+                return missingGit ? { text: missingGit, label: 'Git changes' } : undefined;
+            }
+            const files = git.changedFiles;
             if (files === undefined || (files === 0 && isHidden(item, 'zero'))) {
                 return undefined;
             }
@@ -123,14 +165,21 @@ function renderWidget(item: WidgetItem, data: StatusJSON, git: GitStatus | undef
             return { text: lines + count, label: 'Git changes' };
         }
         case 'git-ahead-behind': {
-            const { ahead, behind } = git ?? {};
-            if (ahead === undefined || behind === undefined || (ahead === 0 && behind === 0 && isHidden(item, 'zero', true))) {
+            const label = 'Ahead / behind upstream';
+            if (!git) {
+                return missingGit ? { text: missingGit, label } : undefined;
+            }
+            const { ahead, behind } = git;
+            if (ahead === undefined || behind === undefined) {
+                return isHidden(item, NO_UPSTREAM_HIDEABLE_STATE.key) ? undefined : { text: '(no upstream)', label };
+            }
+            if (ahead === 0 && behind === 0 && isHidden(item, 'zero', true)) {
                 return undefined;
             }
-            return { text: item.rawValue ? `${ahead},${behind}` : `↑${ahead} ↓${behind}`, label: 'Ahead / behind upstream' };
+            return { text: item.rawValue ? `${ahead},${behind}` : `↑${ahead} ↓${behind}`, label };
         }
         case 'git-account':
-            return labeled('Git', git?.identity);
+            return git ? labeled('Git', git.identity) : missingGit ? { text: missingGit, label: 'Git account' } : undefined;
         case 'thinking-effort': {
             const effort = data.effort?.level;
             const brackets = item.metadata?.brackets;
@@ -219,27 +268,87 @@ function textColor(background: string): string {
 const escape = (value: string) => value
     .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
+interface Cell {
+    item: WidgetItem;
+    value?: Segment;
+    width: number;
+    fixed: boolean;
+    paddingStart: number;
+    paddingEnd: number;
+}
+
+function segmentWidth(value?: Segment): number {
+    return value ? stringWidth(value.text) + (value.percent === undefined ? 0 : 6) : 0;
+}
+
+function layoutRows(settings: Settings, data: StatusJSON, git?: GitStatus): Cell[][] {
+    const padding = stringWidth(settings.defaultPadding ?? '');
+    const rows = settings.lines.map(line => line.flatMap(original => {
+        const item = {
+            ...original,
+            rawValue: settings.minimalistMode || original.rawValue,
+            type: resolveLegacyWidgetType(original.type)
+        };
+        const empty = item.type === 'empty';
+        const value = renderWidget(item, data, git, settings);
+        const sample = item.reserveSpace ? renderWidget(item, preview, previewGit, settings) : undefined;
+        if (!value?.text.trim() && !sample && !empty) {
+            return [];
+        }
+        const maxWidth = item.maxWidth ?? 0;
+        const fixed = !!sample || empty || maxWidth > 0;
+        const width = Math.max(segmentWidth(value), sample ? Math.max(1, segmentWidth(sample)) : 0, empty ? 1 : 0);
+        return [{
+            item, value, fixed,
+            width: maxWidth > 0 ? Math.min(width, maxWidth) : width,
+            paddingStart: settings.defaultPaddingSide === 'right' ? 0 : padding,
+            paddingEnd: settings.defaultPaddingSide === 'left' ? 0 : padding
+        }];
+    }));
+
+    if (settings.powerline.autoAlign) {
+        const alignable = rows.map(row => {
+            const excluded = row.findIndex(cell => cell.item.excludeFromAutoAlign);
+            return excluded === -1 ? row : row.slice(0, excluded);
+        });
+        const columnWidths: number[] = [];
+        for (const row of alignable) {
+            row.forEach((cell, column) => {
+                columnWidths[column] = Math.max(columnWidths[column] ?? 0, cell.width);
+            });
+        }
+        for (const row of alignable) {
+            row.forEach((cell, column) => {
+                cell.width = columnWidths[column];
+                cell.fixed = true;
+            });
+        }
+    }
+    return rows;
+}
+
 export function render(css: string, source: string, settings: Settings, data: StatusJSON, git: GitStatus | undefined, recorded: boolean): string {
-    const rows = settings.lines.map(line => {
-        const segments = line.map(original => {
-            const item = { ...original, type: resolveLegacyWidgetType(original.type) };
-            const value = renderWidget(item, data, git, settings);
-            if (!value?.text.trim()) {
-                return '';
-            }
+    const rows = layoutRows(settings, data, git).map(line => {
+        const segments = line.map(({ item, value, width, fixed, paddingStart, paddingEnd }) => {
+            const empty = item.type === 'empty';
             const background = settings.colorLevel === 0 ? undefined
                 : color(settings.overrideBackgroundColor ?? item.backgroundColor);
             const foreground = settings.colorLevel === 0 ? undefined
                 : color(settings.overrideForegroundColor ?? item.color) ?? (background ? textColor(background) : undefined);
             const style = [
+                fixed && `--segment-content-width:${width}ch`,
+                `--segment-pad-start:${paddingStart}ch`,
+                `--segment-pad-end:${paddingEnd}ch`,
                 background && `--segment-background:${background}`,
                 foreground && `--segment-foreground:${foreground}`,
                 (item.bold ?? settings.globalBold) && 'font-weight:600'
             ].filter(Boolean).join(';');
-            const title = [value.label, value.text].filter(Boolean).join(' · ');
-            const meter = value.percent === undefined ? ''
+            const title = value ? [value.label, value.text].filter(Boolean).join(' · ') : '';
+            const meter = value?.percent === undefined ? ''
                 : `<progress value="${value.percent}" max="100" aria-label="Context used"></progress>`;
-            return `<div class="segment" data-widget="${escape(item.type)}" title="${escape(title)}" style="${style}"><span>${escape(value.text)}</span>${meter}</div>`;
+            const state = empty ? ' empty' : !value ? ' reserved' : '';
+            const accessible = value ? ` title="${escape(title)}"` : ' aria-hidden="true"';
+            return `<div class="segment${state}" data-widget="${escape(item.type)}"${accessible} style="${style}"><span>${escape(value?.text ?? '')}</span>${meter}</div>`;
         }).join('');
         return segments ? `<div class="row">${segments}</div>` : '';
     }).join('');
