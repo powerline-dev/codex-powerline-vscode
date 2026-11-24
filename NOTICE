@@ -3,3 +3,8 @@ Copyright (c) 2026 Martin Hájek
 
 The bundled xterm.js terminal and Fit addon use the MIT License. See LICENSE.
 The node-pty runtime includes its license in node_modules/node-pty/LICENSE.
+
+Codex Powerline Symbols is a renamed WOFF2 subset of the Powerline characters
+in MesloLGS Nerd Font Mono 3.5.1, from the Codex Powerline CLI font assets.
+https://github.com/ryanoasis/nerd-fonts/tree/v3.5.1/patched-fonts/Meslo/S
+See the Meslo and Nerd Fonts license files in assets/fonts.

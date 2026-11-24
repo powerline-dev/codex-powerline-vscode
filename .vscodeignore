@@ -2,6 +2,10 @@
 !dist/extension.js
 !dist/terminal.js
 !dist/terminal.css
+!dist/powerline-symbols.woff2
+!assets/fonts/APACHE-2.0.txt
+!assets/fonts/LICENSE.txt
+!assets/fonts/NERD-FONTS-LICENSE
 !node_modules/node-pty/package.json
 !node_modules/node-pty/LICENSE
 !node_modules/node-pty/lib/**/*.js

@@ -8,6 +8,7 @@ declare function acquireVsCodeApi(): { postMessage(message: TerminalInput): void
 
 const vscode = acquireVsCodeApi();
 const container = document.querySelector<HTMLDivElement>('#terminal')!;
+const symbolFont = '"Codex Powerline Symbols"';
 const ansiColors = [
     'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white',
     'brightBlack', 'brightRed', 'brightGreen', 'brightYellow', 'brightBlue',
@@ -32,7 +33,7 @@ function readTheme(): ITheme {
 }
 
 const terminal = new Terminal({
-    fontFamily: container.dataset.fontFamily,
+    fontFamily: `${symbolFont}, ${container.dataset.fontFamily ?? 'monospace'}`,
     fontSize: Number(container.dataset.fontSize) || 14,
     theme: readTheme()
 });
@@ -53,12 +54,6 @@ function resize(): void {
     }
 }
 
-new ResizeObserver(resize).observe(container);
-new MutationObserver(() => {
-    terminal.options.theme = readTheme();
-    resize();
-}).observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
-void document.fonts.ready.then(resize);
 window.addEventListener('message', (event: MessageEvent<TerminalOutput>) => {
     if (event.data?.type === 'output' && typeof event.data.text === 'string') {
         terminal.write(event.data.text);
@@ -66,4 +61,15 @@ window.addEventListener('message', (event: MessageEvent<TerminalOutput>) => {
 });
 terminal.onData(text => vscode.postMessage({ type: 'input', text }));
 terminal.onBinary(text => vscode.postMessage({ type: 'input', text }));
-resize();
+
+function startTerminal(): void {
+    new ResizeObserver(resize).observe(container);
+    new MutationObserver(() => {
+        terminal.options.theme = readTheme();
+        resize();
+    }).observe(document.body, { attributes: true, attributeFilter: ['class', 'style'] });
+    resize();
+}
+
+// Load the caps before the first PTY resize starts the CLI.
+void document.fonts.load(`12px ${symbolFont}`, '\uE0B0\uE0B6').then(startTerminal, startTerminal);

@@ -2,18 +2,22 @@
   "name": "codex-powerline-vscode",
   "displayName": "Codex Powerline",
   "description": "Run the Codex Powerline terminal in a VS Code sidebar.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "powerline-dev",
   "license": "MIT",
   "engines": {
     "vscode": "^1.96.2"
   },
-  "categories": ["Other"],
+  "categories": [
+    "Other"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/powerline-dev/codex-powerline-vscode.git"
   },
-  "extensionKind": ["workspace"],
+  "extensionKind": [
+    "workspace"
+  ],
   "capabilities": {
     "virtualWorkspaces": false
   },
@@ -58,7 +62,7 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "esbuild src/extension.ts --bundle --platform=node --target=node20 --external:vscode --external:node-pty --outfile=dist/extension.js && esbuild src/webview.ts --bundle --platform=browser --outfile=dist/terminal.js",
+    "build": "esbuild src/extension.ts --bundle --platform=node --target=node20 --external:vscode --external:node-pty --outfile=dist/extension.js && esbuild src/webview.ts --bundle --platform=browser --loader:.woff2=file --asset-names=powerline-symbols --outfile=dist/terminal.js",
     "vscode:prepublish": "npm run check && npm run build",
     "package": "vsce package"
   },
