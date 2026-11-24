@@ -1,0 +1,1 @@
+Customizable Powerline-style statusline for OpenAI Codex in Visual Studio Code.

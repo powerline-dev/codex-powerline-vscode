@@ -1,0 +1,13 @@
+codex
+codex-powerline
+openai
+powerline
+statusline
+vscode
+vscode-extension
+visual-studio-code
+typescript
+themes
+customization
+developer-tools
+ai-coding
