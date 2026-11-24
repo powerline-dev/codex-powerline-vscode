@@ -1,0 +1,100 @@
+{
+  "name": "codex-powerline-vscode",
+  "displayName": "Codex Powerline",
+  "description": "Conversation, project, and account metrics in the Codex sidebar.",
+  "version": "0.1.1",
+  "publisher": "powerline-dev",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.96.2"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/powerline-dev/codex-powerline-vscode.git"
+  },
+  "extensionDependencies": [
+    "openai.chatgpt"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codexPowerline.openSavedConversation",
+        "category": "Codex Powerline",
+        "title": "Open Saved Conversation"
+      },
+      {
+        "command": "codexPowerline.importLayout",
+        "category": "Codex Powerline",
+        "title": "Import Layout",
+        "icon": "$(gear)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "codexPowerline.importLayout",
+          "when": "view == codexPowerline.primary || view == codexPowerline.secondary",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "codexSecondaryViewContainer": [
+        {
+          "id": "codexPowerline.secondary",
+          "name": "Powerline",
+          "type": "webview",
+          "icon": "$(pulse)",
+          "when": "!chatgpt.doesNotSupportSecondarySidebar"
+        }
+      ],
+      "codexViewContainer": [
+        {
+          "id": "codexPowerline.primary",
+          "name": "Powerline",
+          "type": "webview",
+          "icon": "$(pulse)",
+          "when": "chatgpt.doesNotSupportSecondarySidebar"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Codex Powerline",
+      "properties": {
+        "codexPowerline.layout": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "default": null,
+          "scope": "application",
+          "description": "Shared Powerline settings or preset JSON. Leave unset to use Author’s Favorite."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "esbuild src/extension.ts --bundle --platform=node --target=node20 --external:vscode --outfile=dist/extension.js",
+    "vscode:prepublish": "npm run check && npm run build",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "@powerline-dev/codex-powerline-core": "1.0.4",
+    "fzstd": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "~1.96.0",
+    "@vscode/vsce": "^4.1.1",
+    "esbuild": "^0.28.0",
+    "typescript": "~5.9.0"
+  }
+}

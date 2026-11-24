@@ -1,0 +1,14 @@
+Codex Powerline
+Copyright (c) 2026 Martin Hájek
+
+The first version includes portions adapted from ccstatusline:
+Copyright (c) 2025 Matthew Breedlove (https://github.com/sirmalloc)
+Source: https://github.com/sirmalloc/ccstatusline/tree/0c94df755665ed7794f082863821fd5f428cdf60
+
+Both the project and the adapted portions are licensed under the MIT License.
+See LICENSE for the terms.
+
+Bundled dependencies also distributed under the MIT License
+
+fzstd, Copyright (c) 2020 Arjun Barrett
+Zod, Copyright (c) 2025 Colin McDonnell
