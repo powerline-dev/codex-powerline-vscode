@@ -11,6 +11,21 @@ them on PATH. Powerline uses the installed CLI's settings, including the preset
 and widgets. Use **Restart Terminal** in the Terminal header to start a fresh
 process.
 
+## CLI and settings
+
+The [CLI repository](https://github.com/powerline-dev/codex-powerline-cli)
+contains all settings schemas, migrations, themes, presets, and widgets.
+This extension runs the installed `codex-powerline` command; it does not
+require the retired Core repository or npm package. Update the CLI to use
+new Powerline features:
+
+```sh
+npm install --global @powerline-dev/codex-powerline-cli@latest
+codex-powerline configure
+```
+
+Restart the terminal after updating the CLI or saving a layout.
+
 ## Install locally
 
 Install the VSIX with **Extensions → Install from VSIX…**. To build for your
