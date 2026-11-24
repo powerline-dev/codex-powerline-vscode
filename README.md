@@ -11,7 +11,7 @@ With Node.js 22.12 or later, run these commands from the repository root.
 ```sh
 npm ci
 npm run package
-code --install-extension codex-powerline-vscode-0.1.1.vsix
+code --install-extension codex-powerline-vscode-0.1.2.vsix
 ```
 
 You can also use **Extensions → Install from VSIX…** in VS Code. The extension depends on the official **Codex** extension (`openai.chatgpt`). Use `npm run build` to build the extension entry point for an Extension Development Host.

@@ -2,7 +2,7 @@
   "name": "codex-powerline-vscode",
   "displayName": "Codex Powerline",
   "description": "Conversation, project, and account metrics in the Codex sidebar.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "powerline-dev",
   "license": "MIT",
   "engines": {
