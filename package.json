@@ -27,7 +27,8 @@
       {
         "command": "codexPowerline.openSavedConversation",
         "category": "Codex Powerline",
-        "title": "Open Saved Conversation"
+        "title": "Open Saved Conversation",
+        "icon": "$(go-to-file)"
       },
       {
         "command": "codexPowerline.importLayout",
@@ -39,9 +40,14 @@
     "menus": {
       "view/title": [
         {
+          "command": "codexPowerline.openSavedConversation",
+          "when": "view == codexPowerline.primary || view == codexPowerline.secondary",
+          "group": "navigation@1"
+        },
+        {
           "command": "codexPowerline.importLayout",
           "when": "view == codexPowerline.primary || view == codexPowerline.secondary",
-          "group": "navigation"
+          "group": "navigation@2"
         }
       ]
     },

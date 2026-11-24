@@ -134,7 +134,8 @@ class Powerline implements vscode.WebviewViewProvider, vscode.Disposable {
         }
         const selection = currentSelection();
         if (selection.threadId !== this.selection.threadId || selection.tabTitle !== this.selection.tabTitle
-            || selection.projectDirectory !== this.selection.projectDirectory) {
+            || selection.projectDirectory !== this.selection.projectDirectory
+            || selection.codexDraft !== this.selection.codexDraft) {
             this.selection = selection;
             this.thread = {};
             this.recorded = false;
@@ -203,7 +204,7 @@ class Powerline implements vscode.WebviewViewProvider, vscode.Disposable {
         if (this.lifetime.signal.aborted) {
             return;
         }
-        const { threadId, tabTitle } = this.selection;
+        const { threadId, tabTitle, codexDraft } = this.selection;
         const title = tabTitle && !/^(Codex( Chat)?|New (Chat|Conversation))$/i.test(tabTitle) ? tabTitle : undefined;
         const data: StatusJSON = {
             ...this.thread,
@@ -216,7 +217,7 @@ class Powerline implements vscode.WebviewViewProvider, vscode.Disposable {
             if (view.visible) {
                 const uri = vscode.Uri.joinPath(this.extension.extensionUri, 'media', 'powerline.css');
                 const css = view.webview.asWebviewUri(uri).toString();
-                const html = render(css, view.webview.cspSource, this.settings, data, this.git, this.recorded);
+                const html = render(css, view.webview.cspSource, this.settings, data, this.git, this.recorded, codexDraft);
                 if (view.webview.html !== html) {
                     view.webview.html = html;
                 }

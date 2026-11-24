@@ -16,7 +16,7 @@ code --install-extension codex-powerline-vscode-0.1.1.vsix
 
 You can also use **Extensions → Install from VSIX…** in VS Code. The extension depends on the official **Codex** extension (`openai.chatgpt`). Use `npm run build` to build the extension entry point for an Extension Development Host.
 
-Run **Codex Powerline: Open Saved Conversation** from the Command Palette to open a local chat as a Codex editor tab. Run it for two conversations, then switch between their tabs to see Powerline update in the sidebar.
+Use **Open Saved Conversation** in the Powerline header or the Command Palette to open a local chat as a Codex editor tab. For a Codex draft that keeps its draft address after the first reply, use this action to open the saved chat in a tab with its thread ID. Open two conversations this way and switch tabs to see Powerline update.
 
 ## Metrics
 
@@ -26,4 +26,4 @@ Run **Codex Powerline: Open Saved Conversation** from the Command Palette to ope
 
 Chat Status and Permissions show the last status event and permission settings recorded by Codex. Session Cost requires a reported USD cost, which the local history adapter does not supply. Fast Mode requires an explicit service tier in the recorded turn settings. Widgets without source values are hidden. Git and App Server reads require a trusted workspace.
 
-The default layout adapts the shared **Author’s Favorite** preset to the sidebar width and adds thread and token rows. Use the gear in the Powerline header to import a CLI settings export or a Core preset JSON file. Powerline applies the layout immediately and saves it to `codexPowerline.layout` in User Settings. Clear that setting to restore the default layout. Terminal-only widgets and formatting are skipped.
+The default layout adapts the shared **Author’s Favorite** preset to the sidebar width and adds thread and token rows. Widgets with `reserveSpace` keep a blank cell while their values are unavailable. The preset aligns columns across rows and wraps the rows to fit narrower sidebars. Use the gear in the Powerline header to import a CLI settings export or a Core preset JSON file. Powerline applies the layout immediately and saves it to `codexPowerline.layout` in User Settings. Clear that setting to restore the default layout. Terminal-only widgets and formatting are skipped.

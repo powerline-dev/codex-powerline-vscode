@@ -327,7 +327,15 @@ function layoutRows(settings: Settings, data: StatusJSON, git?: GitStatus): Cell
     return rows;
 }
 
-export function render(css: string, source: string, settings: Settings, data: StatusJSON, git: GitStatus | undefined, recorded: boolean): string {
+export function render(
+    css: string,
+    source: string,
+    settings: Settings,
+    data: StatusJSON,
+    git: GitStatus | undefined,
+    recorded: boolean,
+    codexDraft = false
+): string {
     const rows = layoutRows(settings, data, git).map(line => {
         const segments = line.map(({ item, value, width, fixed, paddingStart, paddingEnd }) => {
             const empty = item.type === 'empty';
@@ -352,9 +360,10 @@ export function render(css: string, source: string, settings: Settings, data: St
         }).join('');
         return segments ? `<div class="row">${segments}</div>` : '';
     }).join('');
-    const note = !data.session_id ? 'Open a Codex conversation as an editor tab to see its metrics.'
-        : recorded ? 'Conversation metrics reflect the last recorded values.'
-            : 'No local history metrics are available for this conversation.';
+    const note = data.session_id
+        ? recorded ? 'Conversation metrics reflect the last recorded values.' : 'No local history metrics are available for this conversation.'
+        : codexDraft ? 'Draft editor. After Codex saves the chat, use Open Saved Conversation in the Powerline header.'
+            : 'Open a Codex conversation as an editor tab to see its metrics. Use Open Saved Conversation in the Powerline header.';
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
