@@ -20,3 +20,9 @@
 !NOTICE
 !README.md
 !package.json
+
+!assets/preview.png
+!assets/platforms/*.png
+!assets/platforms/DEVICON-LICENSE.txt
+!assets/platforms/SOURCES.md
+!docs/development.md

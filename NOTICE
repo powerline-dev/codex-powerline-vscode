@@ -9,3 +9,6 @@ Codex Powerline Symbols is a renamed WOFF2 subset of the Powerline characters
 in MesloLGS Nerd Font Mono 3.5.1, from the Codex Powerline CLI font assets.
 https://github.com/ryanoasis/nerd-fonts/tree/v3.5.1/patched-fonts/Meslo/S
 See the Meslo and Nerd Fonts license files in assets/fonts.
+
+README platform icons from Devicon v2.17.0 use the MIT License.
+See assets/platforms/SOURCES.md and assets/platforms/DEVICON-LICENSE.txt.
