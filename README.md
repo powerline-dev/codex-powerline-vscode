@@ -2,34 +2,43 @@
 
 # ![Codex Powerline for VS Code](assets/header.png)
 
-**Your Codex terminal and Powerline status bar, right in the VS Code sidebar.**
+**Your Codex terminal. Your Powerline layout. Right beside your code.**
 
 Run the [Codex Powerline CLI](https://github.com/powerline-dev/codex-powerline-cli)
 beside your code. Keep your model, context, usage limits, and Git state in view,
 with the same layouts, themes, and widgets that you use in your terminal.
 
+Give a ⭐ if this project helped you!
+
 [![GitHub stars](https://img.shields.io/github/stars/powerline-dev/codex-powerline-vscode?style=social)](https://github.com/powerline-dev/codex-powerline-vscode)
+[![GitHub forks](https://img.shields.io/github/forks/powerline-dev/codex-powerline-vscode?style=social)](https://github.com/powerline-dev/codex-powerline-vscode/forks)
+[![GitHub watchers](https://img.shields.io/github/watchers/powerline-dev/codex-powerline-vscode?style=social)](https://github.com/powerline-dev/codex-powerline-vscode)
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![VS Code: 1.96.2+](https://img.shields.io/badge/VS_Code-1.96.2%2B-007ACC)](https://code.visualstudio.com/)
-[![GitHub issues](https://img.shields.io/github/issues/powerline-dev/codex-powerline-vscode)](https://github.com/powerline-dev/codex-powerline-vscode/issues)
+[![Node.js: 22.12+](https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 
-[Download the VSIX](releases/0.2.3/) · [Powerline CLI](https://github.com/powerline-dev/codex-powerline-cli) · [Report a bug](https://github.com/powerline-dev/codex-powerline-vscode/issues)
+[![GitHub issues](https://img.shields.io/github/issues/powerline-dev/codex-powerline-vscode)](https://github.com/powerline-dev/codex-powerline-vscode/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/powerline-dev/codex-powerline-vscode)](https://github.com/powerline-dev/codex-powerline-vscode/pulls)
+[![GitHub contributors](https://img.shields.io/github/contributors/powerline-dev/codex-powerline-vscode)](https://github.com/powerline-dev/codex-powerline-vscode/graphs/contributors)
+
+[📦 Download the VSIX](releases/0.2.3/) · [⚡ Powerline CLI](https://github.com/powerline-dev/codex-powerline-cli) · [🐛 Report a bug](https://github.com/powerline-dev/codex-powerline-vscode/issues)
 
 </div>
 
 ## Contents
 
-- [Install](#install)
-- [Features](#features)
+- [Install](#-install)
+- [Features](#-features)
 - [Configure](#configure)
 - [Troubleshooting](#troubleshooting)
 - [Development](#development)
 - [Release preparation](#release-preparation)
-- [Contributing](#contributing)
+- [Contributing](#-contributing)
 - [Author and acknowledgments](#author-and-acknowledgments)
 - [License](#license)
 
-## Install
+## 🚀 Install
 
 ### 1. Set up the CLI
 
@@ -53,8 +62,8 @@ the [0.2.3 release folder](releases/0.2.3/):
 
 | Platform | Download |
 | --- | --- |
-| Windows x64 | [VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-win32-x64-0.2.3.vsix) |
-| macOS Apple silicon | [VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-darwin-arm64-0.2.3.vsix) |
+| 🪟 Windows x64 | [Download VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-win32-x64-0.2.3.vsix) |
+| 🍎 macOS Apple silicon | [Download VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-darwin-arm64-0.2.3.vsix) |
 
 In VS Code, open **Extensions**, select the **...** menu, then select
 **Install from VSIX...** and choose the downloaded file. Reload VS Code if asked.
@@ -70,21 +79,22 @@ In a multi-root workspace, the terminal uses the folder containing the active fi
 or the first folder if no file is active. Without a workspace, it uses the active
 local file's folder or your home folder.
 
-## Features
+## ✨ Features
 
-- **Codex beside your code.** Use an interactive terminal in the sidebar.
-- **Your existing layout.** Use the CLI's themes, presets, widgets, and settings.
-- **Workspace-aware start.** Start in the folder that matches your active project.
-- **Powerline glyphs included.** The webview bundles the symbols used by Powerline separators.
-- **Persistent session.** Hide and reopen the sidebar without starting a new process.
-- **One-command restart.** Use **Restart Terminal** in the view header or the Command Palette.
+- 💻 **Keep Codex close.** Chat, run commands, and use Codex in an interactive sidebar terminal.
+- 🎨 **Make it yours.** Bring your CLI themes, presets, widgets, and saved layouts into VS Code.
+- ⏱️ **Know what's left.** Keep the CLI's context usage and usage-limit widgets beside your code.
+- 🌿 **Stay oriented.** Start in your active project folder and use the CLI's Git widgets to track your branch.
+- 🔤 **Keep the Powerline look.** Bundled symbols give your separators the glyphs they need.
+- 🧠 **Pick up where you left off.** Hide the sidebar and reopen it without losing the running session.
+- 🔄 **Start fresh in one click.** Use **Restart Terminal** in the view header or the Command Palette.
 
 The CLI owns the model, context, usage, and Git widgets. The extension hosts its
 terminal. It does not contain a separate settings editor or widget engine.
 
 ## Configure
 
-Use the CLI's live configuration editor:
+Pick your widgets, try a theme, and tweak your rows with the CLI's live preview:
 
 ```sh
 codex-powerline configure
@@ -166,9 +176,9 @@ Release folders and source-only SVG headers stay out of the VSIX.
 
 These commands only prepare packages. They do not publish to the Marketplace.
 
-## Contributing
+## 🤝 Contributing
 
-Open an issue to report a bug or discuss a larger change. For code changes, create
+Contributions are welcome! Open an issue to report a bug or discuss a larger change. For code changes, create
 a focused branch and run `npm run check` and `npm run package -- --target <platform>`.
 Check sidebar placement, keyboard input, resizing, hide/show, and restart behavior
 in an isolated VS Code profile before you open a pull request.

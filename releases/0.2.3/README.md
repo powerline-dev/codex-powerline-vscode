@@ -9,7 +9,7 @@ Download the VSIX for your platform. In VS Code, open Extensions, select the
 | macOS Apple silicon | [Download](codex-powerline-vscode-darwin-arm64-0.2.3.vsix) |
 
 On GitHub, open the file and select **Download raw file**. The main
-[README](../../README.md#install) also has direct download links.
+[README](../../README.md#-install) also has direct download links.
 
 ## Changes
 

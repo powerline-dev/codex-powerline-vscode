@@ -1,2 +1,2 @@
-e32ab5f07b529d682ed5dfb279ab770276c80038ef0b49bbe2606f40ba773bbc  codex-powerline-vscode-darwin-arm64-0.2.3.vsix
-f9dcd37ba39c2f4d2fe5fc398ef015ded9d1f1946995e9cac8d303e045274993  codex-powerline-vscode-win32-x64-0.2.3.vsix
+9806b663d9b89ba195b62687d5e9f6a82cead408c3ca39d3792146b7b8f1d972  codex-powerline-vscode-darwin-arm64-0.2.3.vsix
+f4d83344de4073052850f23c8ca75f596dd7762e10ee429dbdf4008f73055558  codex-powerline-vscode-win32-x64-0.2.3.vsix
