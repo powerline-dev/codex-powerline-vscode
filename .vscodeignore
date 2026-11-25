@@ -3,6 +3,9 @@
 !dist/terminal.js
 !dist/terminal.css
 !dist/powerline-symbols.woff2
+!assets/sidebar_icon.svg
+!assets/icon.png
+!assets/header.png
 !assets/fonts/APACHE-2.0.txt
 !assets/fonts/LICENSE.txt
 !assets/fonts/NERD-FONTS-LICENSE
