@@ -34,10 +34,8 @@ Give a ⭐ if this project helped you!
 ## 📥 Install
 
 The downloadable extension packages target **Windows x64** and **macOS Apple silicon**,
-with **VS Code 1.96.2 or newer**. The extension is not yet published to Marketplace.
+with **VS Code 1.96.2 or newer**.
 
-These npm commands apply after the scoped CLI package is published. Until then,
-use the [CLI development setup](https://github.com/powerline-dev/codex-powerline-cli/blob/main/docs/development.md).
 Both `codex` and `codex-powerline` must be on the PATH available to your IDE.
 Restart your IDE after changes to Node.js or PATH.
 
@@ -53,17 +51,18 @@ codex login
 codex-powerline configure
 ```
 
-1. [Download the VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-win32-x64-0.2.3.vsix).
-2. In VS Code, open **Extensions > ... > Install from VSIX...** and select the file.
-3. Reload VS Code if asked, then select **Codex Powerline** in the Activity Bar.
+1. Install [Codex Powerline from Marketplace](https://marketplace.visualstudio.com/items?itemName=powerline-dev.codex-powerline-vscode).
+2. Select **Codex Powerline** in the Activity Bar.
 
-The download link becomes available after the release folder is pushed to GitHub.
+For manual installation, [download the Windows VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-win32-x64-0.2.3.vsix)
+and use **Extensions > ... > Install from VSIX...**.
 You can move the view to the Secondary Side Bar to keep Explorer beside it.
 
 **🔄 Update**
 
-Install the newer matching VSIX from the [release folders](releases/) with
-**Install from VSIX...**, then reload VS Code. Update the shared CLI separately:
+Use the **Extensions** view to update Codex Powerline from Marketplace. If you
+installed from a VSIX, download the newer matching package from the
+[release folders](releases/). Update the shared CLI separately:
 
 ```powershell
 npm install --global @powerline-dev/codex-powerline-cli@latest
@@ -90,17 +89,18 @@ codex login
 codex-powerline configure
 ```
 
-1. [Download the VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-darwin-arm64-0.2.3.vsix).
-2. In VS Code, open **Extensions > ... > Install from VSIX...** and select the file.
-3. Reload VS Code if asked, then select **Codex Powerline** in the Activity Bar.
+1. Install [Codex Powerline from Marketplace](https://marketplace.visualstudio.com/items?itemName=powerline-dev.codex-powerline-vscode).
+2. Select **Codex Powerline** in the Activity Bar.
 
-The download link becomes available after the release folder is pushed to GitHub.
+For manual installation, [download the macOS VSIX](https://github.com/powerline-dev/codex-powerline-vscode/raw/refs/heads/main/releases/0.2.3/codex-powerline-vscode-darwin-arm64-0.2.3.vsix)
+and use **Extensions > ... > Install from VSIX...**.
 You can move the view to the Secondary Side Bar to keep Explorer beside it.
 
 **🔄 Update**
 
-Install the newer matching VSIX from the [release folders](releases/) with
-**Install from VSIX...**, then reload VS Code. Update the shared CLI separately:
+Use the **Extensions** view to update Codex Powerline from Marketplace. If you
+installed from a VSIX, download the newer matching package from the
+[release folders](releases/). Update the shared CLI separately:
 
 ```sh
 npm install --global @powerline-dev/codex-powerline-cli@latest

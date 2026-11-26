@@ -51,6 +51,26 @@ Release folders and source-only SVG headers stay out of the VSIX.
 
 These commands only prepare packages. They do not publish to the Marketplace.
 
+## Publish to Visual Studio Marketplace
+
+In GitHub, create an environment named `marketplace-release` and restrict its
+deployment branches to `main`. In the [Powerline Dev publisher](https://marketplace.visualstudio.com/manage/publishers/powerline-dev),
+open **Trusted Publishing** and create a policy with these values.
+
+| Field | Value |
+| --- | --- |
+| Repository owner | `powerline-dev` |
+| Repository | `codex-powerline-vscode` |
+| Workflow | `publish-marketplace.yml` |
+| Environment | `marketplace-release` |
+
+In GitHub Actions, run **Publish VS Code extension** on `main`.
+Leave `publish` unchecked to build and download both platform packages from the
+run. Check `publish` to send the build to the Marketplace using Trusted Publishing.
+Bump the version in `package.json` and `package-lock.json` for the next release.
+
+See [Microsoft's Trusted Publishing setup](https://developer.microsoft.com/blog/trusted-publishing-visual-studio-marketplace/).
+
 ## Contribution checks
 
 Contributions are welcome! Open an issue to report a bug or discuss a larger change. For code changes, create
