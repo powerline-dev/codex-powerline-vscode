@@ -64,10 +64,15 @@ open **Trusted Publishing** and create a policy with these values.
 | Workflow | `publish-marketplace.yml` |
 | Environment | `marketplace-release` |
 
-In GitHub Actions, run **Publish VS Code extension** on `main`.
-Leave `publish` unchecked to build and download both platform packages from the
-run. Check `publish` to send the build to the Marketplace using Trusted Publishing.
-Bump the version in `package.json` and `package-lock.json` for the next release.
+For an update, bump the version in `package.json` and `package-lock.json`, then
+merge to `main`. GitHub Actions builds both platforms on each push to `main`.
+A push that increases the version also publishes via Trusted Publishing, provided
+the Marketplace has no newer version. The publish job skips existing platform
+packages so a retry can upload a missing platform package.
+
+For a manual build or retry, run **Publish VS Code extension** on `main`.
+Leave `publish` unchecked to download both platform packages from the run.
+Check `publish` to publish any missing packages for the current version.
 
 See [Microsoft's Trusted Publishing setup](https://developer.microsoft.com/blog/trusted-publishing-visual-studio-marketplace/).
 
