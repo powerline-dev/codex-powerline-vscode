@@ -1,0 +1,70 @@
+name: Publish VS Code extension
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the built VSIX packages to Visual Studio Marketplace
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - runner: windows-2025
+            target: win32-x64
+          - runner: macos-15
+            target: darwin-arm64
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci
+      - name: Package the extension
+        run: npm run package -- --target ${{ matrix.target }} --out codex-powerline-vscode-${{ matrix.target }}.vsix
+      - uses: actions/upload-artifact@v7
+        with:
+          name: vsix-${{ matrix.target }}
+          path: codex-powerline-vscode-${{ matrix.target }}.vsix
+          if-no-files-found: error
+
+  publish:
+    if: inputs.publish && github.repository == 'powerline-dev/codex-powerline-vscode' && github.ref == 'refs/heads/main'
+    needs: package
+    runs-on: ubuntu-latest
+    environment: marketplace-release
+    concurrency:
+      group: marketplace-publish
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: vsix-*
+          merge-multiple: true
+          path: artifacts
+      - name: Publish both platforms
+        run: >-
+          npm exec -- vsce publish --oidc --skip-duplicate --packagePath
+          artifacts/codex-powerline-vscode-win32-x64.vsix
+          artifacts/codex-powerline-vscode-darwin-arm64.vsix
