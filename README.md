@@ -2,7 +2,7 @@
 
 # ![Codex Powerline for VS Code](assets/header.png)
 
-**Your Codex terminal. Your Powerline layout. Right beside your code.**
+**A VS Code extension that brings the OpenAI Codex CLI and its Powerline status bar to your sidebar.**
 
 Run Codex Powerline in a VS Code sidebar, with the same model, context,
 usage limits, Git widgets, themes, and saved layouts as the CLI.
